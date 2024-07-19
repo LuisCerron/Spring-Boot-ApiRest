@@ -5,26 +5,27 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-
 @Setter
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="producto")
-public class Product {
+@Table(name = "detalleVenta")
+public class SaleDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name="nombre")
-    private String name;
+    @ManyToOne
+    @JoinColumn(name="id_producto", nullable = false)
+    @JsonIgnore
+    private Product product;
+    @Column(name="cantidad")
+    private int quantity;
     @Column(name="precio")
     private BigDecimal price;
-    @Column(name="stock")
-    private int stock;
     @ManyToOne
-    @JoinColumn(name="id_fabricante", nullable = false)
+    @JoinColumn(name="id_venta", nullable = false)
     @JsonIgnore
-    private Maker maker;
+    private Sale sale;
 }
